@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
 require "bundler/setup"
-require_relative "../lib/co2"
+require_relative "../lib/co2-notify"
 
-Co2.start(ARGV)
+Co2Notify.start(ARGV)

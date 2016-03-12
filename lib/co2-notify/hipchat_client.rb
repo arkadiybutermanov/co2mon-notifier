@@ -1,4 +1,4 @@
-class Co2::HipchatClient
+class Co2Notify::HipchatClient
   attr_reader :client, :config
   delegate :room, :location, :api_token, to: :config
 

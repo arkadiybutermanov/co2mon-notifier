@@ -1,6 +1,6 @@
 require "yaml"
 
-class Co2::Config < OpenStruct
+class Co2Notify::Config < OpenStruct
   CONFIG_FILE_NAME = ".co2-notify.yml".freeze
   DEFAULT_TIMEOUT = 5.freeze
   DEFAULT_COOLDOWN = 15.freeze

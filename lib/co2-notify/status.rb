@@ -1,4 +1,4 @@
-class Co2::Status
+class Co2Notify::Status
   class Base
     attr_reader :co2, :config, :previous
     delegate :timeout, :cooldown, :mention, :user, to: :config

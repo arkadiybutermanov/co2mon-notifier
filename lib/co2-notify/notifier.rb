@@ -1,6 +1,6 @@
-class Co2::Notifier
+class Co2Notify::Notifier
   def self.start
-    new(Co2::Config.get).start
+    new(Co2Notify::Config.get).start
   end
 
   attr_reader :config, :client, :status
@@ -8,14 +8,14 @@ class Co2::Notifier
 
   def initialize(config)
     @config = config
-    @client = Co2::HipchatClient.new(config)
-    @status = Co2::Status::Empty.new(config)
+    @client = Co2Notify::HipchatClient.new(config)
+    @status = Co2Notify::Status::Empty.new(config)
   end
 
   def start
     loop do
       notify
-      sleep timeout
+      sleep timeout * 60
     end
   rescue Interrupt
   end
@@ -27,7 +27,7 @@ class Co2::Notifier
   end
 
   def notify
-    new_status = Co2::Status.build(get_data, config, status)
+    new_status = Co2Notify::Status.build(get_data, config, status)
 
     if status.changed?(new_status)
       client.send(new_status)
