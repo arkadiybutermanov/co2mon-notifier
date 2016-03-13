@@ -15,5 +15,5 @@
 
 ## Autoload
 
-    $ co2-notify autoload
+    $ co2-notify autoload $(which co2-notify)
     $ launchctl load Library/LaunchAgents/arkadiybutermanov.co2-notify.plist

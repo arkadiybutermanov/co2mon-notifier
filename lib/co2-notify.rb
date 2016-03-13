@@ -1,10 +1,13 @@
 require "thor"
 require "co2mon"
 require "hipchat"
+require "plist"
 require "active_support/core_ext/object/blank"
 require "active_support/core_ext/module/delegation"
 
 class Co2Notify < Thor
+  PLIST_NAME = "arkadiybutermanov.co2-notify".freeze
+
   desc "start", "start notifier"
   def start
     Notifier.start
@@ -16,11 +19,21 @@ class Co2Notify < Thor
   end
 
   desc "autoload", "setup OSX plist"
-  def autoload
-    plist_path = File.expand_path("arkadiybutermanov.co2-notify.plist", __dir__)
-    target_path = File.expand_path("Library/LaunchAgents", ENV["HOME"])
+  def autoload(path)
+    target_path = File.expand_path("Library/LaunchAgents/#{PLIST_NAME}.plist", ENV["HOME"])
+    data = {
+      "KeepAlive" => true,
+      "Label" => PLIST_NAME,
+      "ProgramArguments" => [
+        path,
+        "start"
+      ],
+      "RunAtLoad" => true
+    }
 
-    FileUtils.cp plist_path, target_path
+    File.open(target_path, "w") do |f|
+      f.write Plist::Emit.dump(data)
+    end
   end
 end
 
