@@ -14,6 +14,14 @@ class Co2Notify < Thor
   def init
     Config.set
   end
+
+  desc "autoload", "setup OSX plist"
+  def autoload
+    plist_path = File.expand_path("arkadiybutermanov.co2-notify.plist", __dir__)
+    target_path = File.expand_path("Library/LaunchAgents", ENV["HOME"])
+
+    FileUtils.cp plist_path, target_path
+  end
 end
 
 require_relative "co2-notify/config"
