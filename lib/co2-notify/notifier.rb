@@ -14,7 +14,12 @@ class Co2Notify::Notifier
 
   def start
     loop do
-      notify
+      time = Time.now
+
+      if time > start_time && time < stop_time
+        notify
+      end
+
       sleep timeout * 60
     end
   rescue Interrupt
@@ -33,5 +38,13 @@ class Co2Notify::Notifier
       client.send(new_status)
       @status = new_status
     end
+  end
+
+  def start_time
+    Time.parse(config.start_time)
+  end
+
+  def stop_time
+    Time.parse(config.stop_time)
   end
 end

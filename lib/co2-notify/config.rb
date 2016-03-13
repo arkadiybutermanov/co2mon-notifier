@@ -6,6 +6,8 @@ class Co2Notify::Config < OpenStruct
   DEFAULT_COOLDOWN = 15.freeze
   DEFAULT_HIGH_LEVEL = 800.freeze
   DEFAULT_VERY_HIGH_LEVEL = 1200.freeze
+  DEFAULT_START_TIME = "12:00".freeze
+  DEFAULT_STOP_TIME = "19:00".freeze
 
   def self.get
     new YAML.load_file(config_file)
@@ -29,6 +31,10 @@ class Co2Notify::Config < OpenStruct
       h["high_level"] = STDIN.gets.chomp.presence || DEFAULT_HIGH_LEVEL
       print "Very High CO2 level (default: #{DEFAULT_VERY_HIGH_LEVEL}): "
       h["very_high_level"] = STDIN.gets.chomp.presence || DEFAULT_VERY_HIGH_LEVEL
+      print "Start time (default: #{DEFAULT_START_TIME}): "
+      h["start_time"] = STDIN.gets.chomp.presence || DEFAULT_START_TIME
+      print "Stop time (default: #{DEFAULT_STOP_TIME}): "
+      h["stop_time"] = STDIN.gets.chomp.presence || DEFAULT_STOP_TIME
       print "Mention (optional): "
       h["mention"] = STDIN.gets.chomp
     end
