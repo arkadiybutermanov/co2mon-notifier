@@ -8,9 +8,19 @@ require "active_support/core_ext/module/delegation"
 class Co2Notify < Thor
   PLIST_NAME = "arkadiybutermanov.co2-notify".freeze
 
-  desc "start", "start notifier"
-  def start
+  desc "go", "start notifier"
+  def go
     Notifier.start
+  end
+
+  desc "start", "start notifier in background"
+  def start
+    system "launchctl load #{plist_path}"
+  end
+
+  desc "stop", "stop background notifier"
+  def stop
+    system "launchctl unload #{plist_path}"
   end
 
   desc "init", "setup config"
@@ -20,20 +30,25 @@ class Co2Notify < Thor
 
   desc "autoload", "setup OSX plist"
   def autoload(path)
-    target_path = File.expand_path("Library/LaunchAgents/#{PLIST_NAME}.plist", ENV["HOME"])
     data = {
       "KeepAlive" => true,
       "Label" => PLIST_NAME,
       "ProgramArguments" => [
         path,
-        "start"
+        "go"
       ],
       "RunAtLoad" => true
     }
 
-    File.open(target_path, "w") do |f|
+    File.open(plist_path, "w") do |f|
       f.write Plist::Emit.dump(data)
     end
+  end
+
+  private
+
+  def plist_path
+    File.expand_path("Library/LaunchAgents/#{PLIST_NAME}.plist", ENV["HOME"])
   end
 end
 
