@@ -28,7 +28,9 @@ class Co2Notify::Status
     end
 
     def changed?(new_status)
-      new_status.is_a?(Empty) || new_status.is_a?(Normal) || new_status.is_a?(VeryHigh)
+      new_status.is_a?(Empty) ||
+        new_status.is_a?(Normal) ||
+        (new_status.is_a?(VeryHigh) && new_status.co2 > co2)
     end
 
     def timeout
@@ -46,7 +48,10 @@ class Co2Notify::Status
     end
 
     def changed?(new_status)
-      new_status.is_a?(Empty) || new_status.is_a?(Normal) || new_status.is_a?(High) || new_status.is_a?(VeryHigh)
+      new_status.is_a?(Empty) ||
+        new_status.is_a?(Normal) ||
+        (new_status.is_a?(High) && new_status.co2 > co2)  ||
+        new_status.is_a?(VeryHigh)
     end
 
     def timeout
