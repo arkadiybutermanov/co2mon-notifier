@@ -8,6 +8,6 @@ class Co2Notify::HipchatClient
   end
 
   def send(status)
-    client[room].send("Co2 (#{location})", status.message, color: status.color, message_format: "text")
+    client[room].send("#{location}", status.message, color: status.color, message_format: "text")
   end
 end

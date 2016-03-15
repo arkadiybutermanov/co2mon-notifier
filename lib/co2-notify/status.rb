@@ -20,7 +20,7 @@ class Co2Notify::Status
 
   class VeryHigh < Base
     def message
-      "#{hc_mention}CO2 level is very high - #{co2}. Please open the windows!"
+      "#{hc_mention}CO₂ level is very high - #{co2}. Please open the windows!"
     end
 
     def color
@@ -38,7 +38,7 @@ class Co2Notify::Status
 
   class High < Base
     def message
-      "#{hc_mention}CO2 level is high - #{co2}. Please open the windows!"
+      "#{hc_mention}CO₂ level is high - #{co2}. Please open the windows!"
     end
 
     def color
@@ -56,7 +56,7 @@ class Co2Notify::Status
 
   class Normal < Base
     def message
-      "#{hc_mention}CO2 level is normalized - #{co2}. You can close the windows."
+      "#{hc_mention}CO₂ level is normalized - #{co2}. You can close the windows."
     end
 
     def color
@@ -74,7 +74,7 @@ class Co2Notify::Status
 
   class Empty < Base
     def message
-      "#{hc_user}Please check that CO2 monitor is connected."
+      "#{hc_user}Please check that CO₂ monitor is connected."
     end
 
     def color

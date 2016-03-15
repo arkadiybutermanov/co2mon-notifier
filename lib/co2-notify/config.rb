@@ -27,9 +27,9 @@ class Co2Notify::Config < OpenStruct
       h["timeout"] = STDIN.gets.chomp.presence || DEFAULT_TIMEOUT
       print "Cooldown (default: #{DEFAULT_COOLDOWN} mins): "
       h["cooldown"] = STDIN.gets.chomp.presence || DEFAULT_COOLDOWN
-      print "High CO2 level (default: #{DEFAULT_HIGH_LEVEL}): "
+      print "High CO₂ level (default: #{DEFAULT_HIGH_LEVEL}): "
       h["high_level"] = STDIN.gets.chomp.presence || DEFAULT_HIGH_LEVEL
-      print "Very High CO2 level (default: #{DEFAULT_VERY_HIGH_LEVEL}): "
+      print "Very High CO₂ level (default: #{DEFAULT_VERY_HIGH_LEVEL}): "
       h["very_high_level"] = STDIN.gets.chomp.presence || DEFAULT_VERY_HIGH_LEVEL
       print "Start time (default: #{DEFAULT_START_TIME}): "
       h["start_time"] = STDIN.gets.chomp.presence || DEFAULT_START_TIME
