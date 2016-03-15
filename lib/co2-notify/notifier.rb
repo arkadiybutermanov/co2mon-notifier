@@ -9,7 +9,7 @@ class Co2Notify::Notifier
   def initialize(config)
     @config = config
     @client = Co2Notify::HipchatClient.new(config)
-    @status = Co2Notify::Status::Empty.new(config)
+    @status = Co2Notify::Status::Empty.new(config, Time.now)
   end
 
   def start
@@ -32,7 +32,7 @@ class Co2Notify::Notifier
   end
 
   def notify
-    new_status = Co2Notify::Status.build(get_data, config, status)
+    new_status = Co2Notify::Status.build(get_data, Time.now, config, status)
 
     if status.changed?(new_status)
       client.send(new_status)

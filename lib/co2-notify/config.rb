@@ -8,6 +8,7 @@ class Co2Notify::Config < OpenStruct
   DEFAULT_VERY_HIGH_LEVEL = 1200.freeze
   DEFAULT_START_TIME = "12:00".freeze
   DEFAULT_STOP_TIME = "19:00".freeze
+  DEFAULR_PING_TIMEOUT = 10.freeze
 
   def self.get
     new YAML.load_file(config_file)
@@ -27,6 +28,8 @@ class Co2Notify::Config < OpenStruct
       h["timeout"] = STDIN.gets.chomp.presence || DEFAULT_TIMEOUT
       print "Cooldown (default: #{DEFAULT_COOLDOWN} mins): "
       h["cooldown"] = STDIN.gets.chomp.presence || DEFAULT_COOLDOWN
+      print "Ping timeout (default: #{DEFAULT_PING_TIMEOUT} mins): "
+      h["ping_timeout"] = STDIN.gets.chomp.presence || DEFAULT_PING_TIMEOUT
       print "High CO₂ level (default: #{DEFAULT_HIGH_LEVEL}): "
       h["high_level"] = STDIN.gets.chomp.presence || DEFAULT_HIGH_LEVEL
       print "Very High CO₂ level (default: #{DEFAULT_VERY_HIGH_LEVEL}): "

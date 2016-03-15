@@ -1,10 +1,10 @@
 class Co2Notify::Status
   class Base
-    attr_reader :co2, :config, :previous
-    delegate :timeout, :cooldown, :mention, :user, to: :config
+    attr_reader :co2, :config, :previous, :time
+    delegate :timeout, :cooldown, :mention, :user, :ping_timeout, to: :config
 
-    def initialize(config, previous = nil, co2 = nil)
-      @config, @co2, @previous = config, co2, previous
+    def initialize(config, time, previous = nil, co2 = nil)
+      @config, @co2, @previous, @time = config, co2, previous, time
     end
 
     private
@@ -61,7 +61,11 @@ class Co2Notify::Status
 
   class Normal < Base
     def message
-      "#{hc_mention}CO₂ level is normalized - #{co2}. You can close the windows."
+      if previous.is_a?(Normal) || previous.is_a?(Empty)
+        "CO₂ level is normal - #{co2}."
+      else
+        "#{hc_mention}CO₂ level is normalized - #{co2}. You can close the windows."
+      end
     end
 
     def color
@@ -69,7 +73,10 @@ class Co2Notify::Status
     end
 
     def changed?(new_status)
-      new_status.is_a?(Empty) || new_status.is_a?(High) || new_status.is_a?(VeryHigh)
+      new_status.is_a?(Empty) ||
+        new_status.is_a?(High) ||
+        new_status.is_a?(VeryHigh) ||
+        (new_status.is_a?(Normal) && new_status.time >= time + ping_timeout * 60)
     end
 
     def timeout
@@ -87,20 +94,23 @@ class Co2Notify::Status
     end
 
     def changed?(new_status)
-      new_status.is_a?(Empty) || new_status.is_a?(High) || new_status.is_a?(VeryHigh)
+      new_status.is_a?(Empty) ||
+        new_status.is_a?(High) ||
+        new_status.is_a?(VeryHigh) ||
+        new_status.is_a?(Normal)
     end
   end
 
-  def self.build(co2, config, previous = nil)
+  def self.build(co2, time, config, previous = nil)
     case co2
     when 1..config.high_level
-      Normal.new(config, previous, co2)
+      Normal.new(config, time, previous, co2)
     when config.high_level..config.very_high_level
-      High.new(config, previous, co2)
+      High.new(config, time, previous, co2)
     when proc { |n| n >= config.very_high_level }
-      VeryHigh.new(config, previous, co2)
+      VeryHigh.new(config, time, previous, co2)
     else
-      Empty.new(config)
+      Empty.new(config, time)
     end
   end
 end
