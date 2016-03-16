@@ -5,7 +5,6 @@ class Co2Notify::Config < OpenStruct
   CONFIG_FILE_NAME = "config.yml".freeze
   OUTPUT_FILE_NAME = "output.log".freeze
   ERROR_FILE_NAME = "error.log".freeze
-  FANN_FILE_NAME = "co2.net".freeze
   DEFAULT_TIMEOUT = 5.freeze
   DEFAULT_COOLDOWN = 15.freeze
   DEFAULT_HIGH_LEVEL = 800.freeze
@@ -67,9 +66,5 @@ class Co2Notify::Config < OpenStruct
 
   def self.error_path
     File.join(config_dir, ERROR_FILE_NAME)
-  end
-
-  def self.fann_path
-    File.join(config_dir, FANN_FILE_NAME)
   end
 end

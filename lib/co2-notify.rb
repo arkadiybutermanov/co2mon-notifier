@@ -2,7 +2,6 @@ require "thor"
 require "co2mon"
 require "hipchat"
 require "plist"
-require "ruby-fann"
 require "active_support/core_ext/object/blank"
 require "active_support/core_ext/module/delegation"
 

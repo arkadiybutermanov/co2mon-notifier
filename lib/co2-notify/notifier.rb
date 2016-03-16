@@ -6,8 +6,6 @@ class Co2Notify::Notifier
   attr_reader :config, :client, :status
   delegate :timeout, to: :status
 
-  NORMALIZATION_CONSTANT = 10000.0.freeze
-
   def initialize(config)
     @config = config
     @client = Co2Notify::HipchatClient.new(config)
@@ -39,31 +37,6 @@ class Co2Notify::Notifier
     if status.changed?(new_status)
       client.send(new_status)
       @status = new_status
-
-      if status.type_changed?
-        fann = if File.exist?(Co2Notify::Config.fann_path)
-          RubyFann::Standard.new(filename: Co2Notify::Config.fann_path)
-        else
-          RubyFann::Shortcut.new(num_inputs: 2, num_outputs: 1)
-        end
-
-        train = RubyFann::TrainData.new(
-          inputs: [
-            [
-              (status.co2 - (status.previous.co2 || 0)) / NORMALIZATION_CONSTANT,
-              status.time.hour / 100.0
-            ]
-          ],
-          desired_outputs: [
-            [
-              (status.time - status.previous.time) / NORMALIZATION_CONSTANT
-            ]
-          ]
-        )
-
-        fann.train_on_data(train, 1000, 10, 0.01)
-        fann.save(Co2Notify::Config.fann_path)
-      end
     end
   end
 
