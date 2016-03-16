@@ -37,7 +37,9 @@ class Co2Notify < Thor
         path,
         "go"
       ],
-      "RunAtLoad" => true
+      "RunAtLoad" => true,
+      "StandardOutPath" => Config.output_path,
+      "StandardErrorPath" => Config.error_path
     }
 
     File.open(plist_path, "w") do |f|
