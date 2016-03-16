@@ -3,6 +3,8 @@ class Co2Notify::Status
     attr_reader :co2, :config, :previous, :time
     delegate :timeout, :cooldown, :mention, :user, :ping_timeout, to: :config
 
+    SAFE_RANGE = 100.freeze
+
     def initialize(config, time, previous = nil, co2 = nil)
       @config, @co2, @previous, @time = config, co2, previous, time
     end
@@ -29,7 +31,7 @@ class Co2Notify::Status
 
     def changed?(new_status)
       new_status.is_a?(Empty) ||
-        new_status.is_a?(Normal) ||
+        (new_status.is_a?(Normal) && new_status.co2 <= config.high_level - SAFE_RANGE) ||
         (new_status.is_a?(VeryHigh) && new_status.co2 > co2)
     end
 
@@ -49,7 +51,7 @@ class Co2Notify::Status
 
     def changed?(new_status)
       new_status.is_a?(Empty) ||
-        new_status.is_a?(Normal) ||
+        (new_status.is_a?(Normal) && new_status.co2 <= config.high_level - SAFE_RANGE) ||
         (new_status.is_a?(High) && new_status.co2 > co2)  ||
         new_status.is_a?(VeryHigh)
     end
