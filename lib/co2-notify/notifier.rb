@@ -34,6 +34,8 @@ class Co2Notify::Notifier
   def notify
     new_status = Co2Notify::Status.build(get_data, Time.now, config, status)
 
+    puts "Status: #{new_status}"
+
     if status.changed?(new_status)
       client.send(new_status)
       @status = new_status
