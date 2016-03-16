@@ -7,6 +7,10 @@ class Co2Notify::Status
       @config, @co2, @previous, @time = config, co2, previous, time
     end
 
+    def type_changed?
+      self.class != previous.class
+    end
+
     private
 
     def hc_mention

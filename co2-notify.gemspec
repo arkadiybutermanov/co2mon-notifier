@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activesupport"
   spec.add_dependency "co2mon"
   spec.add_dependency "plist"
+  spec.add_dependency "ruby-fann"
 end
