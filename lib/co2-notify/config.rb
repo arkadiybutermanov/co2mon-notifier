@@ -8,7 +8,7 @@ class Co2Notify::Config < OpenStruct
   DEFAULT_VERY_HIGH_LEVEL = 1200.freeze
   DEFAULT_START_TIME = "12:00".freeze
   DEFAULT_STOP_TIME = "19:00".freeze
-  DEFAULR_PING_TIMEOUT = 10.freeze
+  DEFAULR_PING_TIMEOUT = 60.freeze
 
   def self.get
     new YAML.load_file(config_file)
