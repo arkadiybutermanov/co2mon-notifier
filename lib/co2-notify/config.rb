@@ -1,20 +1,23 @@
 require "yaml"
 
 class Co2Notify::Config < OpenStruct
-  CONFIG_FILE_NAME = ".co2-notify.yml".freeze
+  CONFIG_DIR = ".co2-notify".freeze
+  CONFIG_FILE_NAME = "config.yml".freeze
   DEFAULT_TIMEOUT = 5.freeze
   DEFAULT_COOLDOWN = 15.freeze
   DEFAULT_HIGH_LEVEL = 800.freeze
   DEFAULT_VERY_HIGH_LEVEL = 1200.freeze
   DEFAULT_START_TIME = "12:00".freeze
   DEFAULT_STOP_TIME = "19:00".freeze
-  DEFAULR_PING_TIMEOUT = 60.freeze
+  DEFAULT_PING_TIMEOUT = 60.freeze
 
   def self.get
     new YAML.load_file(config_file)
   end
 
   def self.set
+    FileUtils.mkdir_p(config_dir) unless File.directory?(config_dir)
+
     data = {}.tap do |h|
       print "Monitor location (required): "
       h["location"] = STDIN.gets.chomp
@@ -47,7 +50,11 @@ class Co2Notify::Config < OpenStruct
     end
   end
 
+  def self.config_dir
+    File.join(ENV['HOME'], CONFIG_DIR)
+  end
+
   def self.config_file
-    File.join(ENV['HOME'], CONFIG_FILE_NAME)
+    File.join(config_dir, CONFIG_FILE_NAME)
   end
 end
