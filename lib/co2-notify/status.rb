@@ -66,7 +66,7 @@ class Co2Notify::Status
       if previous.is_a?(Normal) || previous.is_a?(Empty)
         "CO₂ level is normal - #{co2}."
       else
-        "#{hc_mention}CO₂ level is normalized - #{co2}. You can close the windows."
+        "#{hc_mention}CO₂ level is normalized - #{co2}."
       end
     end
 
