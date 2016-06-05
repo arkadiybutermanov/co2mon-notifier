@@ -30,15 +30,15 @@ class Co2Notify::Config < OpenStruct
       print "Hipchat room name (required): "
       h["room"] = STDIN.gets.chomp
       print "Timeout (default: #{DEFAULT_TIMEOUT} mins): "
-      h["timeout"] = STDIN.gets.chomp.presence || DEFAULT_TIMEOUT
+      h["timeout"] = (STDIN.gets.chomp.presence || DEFAULT_TIMEOUT).to_i
       print "Cooldown (default: #{DEFAULT_COOLDOWN} mins): "
-      h["cooldown"] = STDIN.gets.chomp.presence || DEFAULT_COOLDOWN
+      h["cooldown"] = (STDIN.gets.chomp.presence || DEFAULT_COOLDOWN).to_i
       print "Ping timeout (default: #{DEFAULT_PING_TIMEOUT} mins): "
-      h["ping_timeout"] = STDIN.gets.chomp.presence || DEFAULT_PING_TIMEOUT
+      h["ping_timeout"] = (STDIN.gets.chomp.presence || DEFAULT_PING_TIMEOUT).to_i
       print "High CO₂ level (default: #{DEFAULT_HIGH_LEVEL}): "
-      h["high_level"] = STDIN.gets.chomp.presence || DEFAULT_HIGH_LEVEL
+      h["high_level"] = (STDIN.gets.chomp.presence || DEFAULT_HIGH_LEVEL).to_i
       print "Very High CO₂ level (default: #{DEFAULT_VERY_HIGH_LEVEL}): "
-      h["very_high_level"] = STDIN.gets.chomp.presence || DEFAULT_VERY_HIGH_LEVEL
+      h["very_high_level"] = (STDIN.gets.chomp.presence || DEFAULT_VERY_HIGH_LEVEL).to_i
       print "Start time (default: #{DEFAULT_START_TIME}): "
       h["start_time"] = STDIN.gets.chomp.presence || DEFAULT_START_TIME
       print "Stop time (default: #{DEFAULT_STOP_TIME}): "
